@@ -1,3 +1,5 @@
+Implemented by Qwen3.5 Plus in Trae CN
+
 # BlueMapOSSStorage
 
 A storage addon for [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) that enables storing map data in Aliyun OSS (Object Storage Service).
