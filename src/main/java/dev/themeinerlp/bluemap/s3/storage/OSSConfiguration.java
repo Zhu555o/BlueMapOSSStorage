@@ -17,20 +17,16 @@
  */
 package dev.themeinerlp.bluemap.s3.storage;
 
-public sealed interface S3Configuration permits S3StorageConfiguration {
+public sealed interface OSSConfiguration permits OSSStorageConfiguration {
 
-    String getBucketName();
-
-    String getRegion();
+    String getEndpoint();
 
     String getAccessKeyId();
 
-    String getSecretAccessKey();
+    String getAccessKeySecret();
 
-    String getEndpointUrl();
+    String getBucketName();
 
     String getRootPath();
-
-    boolean forcePathStyle();
 
 }

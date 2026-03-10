@@ -20,19 +20,18 @@ package dev.themeinerlp.bluemap.s3;
 import de.bluecolored.bluemap.common.config.storage.StorageConfig;
 import de.bluecolored.bluemap.common.config.storage.StorageType;
 import de.bluecolored.bluemap.core.util.Key;
-import dev.themeinerlp.bluemap.s3.storage.S3StorageConfiguration;
+import dev.themeinerlp.bluemap.s3.storage.OSSStorageConfiguration;
 
 public final class S3StorageAddon implements Runnable {
     @Override
     public void run() {
-        StorageType.REGISTRY.register(new S3StorageType());
+        StorageType.REGISTRY.register(new OSSStorageType());
     }
 
-    class S3StorageType implements StorageType {
+    class OSSStorageType implements StorageType {
 
-        private static final Key KEY = new Key("themeinerlp", "s3");
-        private static final Class<? extends StorageConfig> CONFIG_TYPE = S3StorageConfiguration.class;
-
+        private static final Key KEY = new Key("themeinerlp", "oss");
+        private static final Class<? extends StorageConfig> CONFIG_TYPE = OSSStorageConfiguration.class;
 
         @Override
         public Class<? extends StorageConfig> getConfigType() {

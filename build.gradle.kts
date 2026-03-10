@@ -5,7 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.nio.spi.s3)
+    implementation("com.aliyun.oss:aliyun-sdk-oss:3.18.1")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
     compileOnly(libs.bluemap.core)
     compileOnly(libs.bluemap.common)
     testImplementation(platform(libs.junit.bom))
