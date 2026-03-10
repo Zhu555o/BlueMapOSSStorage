@@ -1,55 +1,55 @@
-# BlueMapS3Storage
+# BlueMapOSSStorage
 
-A storage addon for [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) that enables storing map data in S3-compatible storage services.
+A storage addon for [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) that enables storing map data in Aliyun OSS (Object Storage Service).
 
 ## Overview
 
-BlueMapS3Storage is an addon for BlueMap that provides the ability to store map data in S3-compatible storage services, such as:
+BlueMapOSSStorage is an addon for BlueMap that provides the ability to store map data in Aliyun OSS (Object Storage Service). This addon is particularly useful for:
 
-- Amazon S3
-- MinIO
-- DigitalOcean Spaces
-- Backblaze B2
-- Any other S3-compatible storage service
-
-This addon is particularly useful for:
-- Servers with distributed architectures
+- Servers deployed in China or Asia regions
 - Environments where local storage is limited or not persistent
 - Setups that require high availability and redundancy
 - Multi-server networks that need to share the same map data
+- Cost-effective object storage solutions
 
 ## Features
 
-- Store BlueMap data in any S3-compatible storage service
-- Configure custom endpoints for self-hosted S3 solutions
-- Support for path-style access for compatibility with various S3 implementations (like MinIO)
+- Store BlueMap data directly in Aliyun OSS
+- Support for all OSS regions worldwide
+- Automatic compression with gzip, zstd, or deflate
 - Seamless integration with BlueMap's storage system
+- High performance with built-in caching
+- Cost-effective storage solution
 
 ## Requirements
 
 - BlueMap 5.3 or higher
 - Java 21 or higher
-- Access to an S3-compatible storage service
+- Aliyun OSS bucket and credentials
 
 ## Installation
+
 ### Spigot/Paper
 
-1. Download the latest release of BlueMapS3Storage from the [releases page](https://github.com/TheMeinerLP/BlueMapS3Storage/releases)
+1. Download the latest release of BlueMapOSSStorage from the [releases page](https://github.com/Zhu555o/BlueMapOSSStorage/releases)
 2. Place the JAR file in the `./plugins/BlueMap/packs/` directory of your server
 3. Restart your server or reload BlueMap
 
 ### Sponge, Forge, Fabric
-1. Download the latest release of BlueMapS3Storage from the [releases page](https://github.com/TheMeinerLP/BlueMapS3Storage/releases)
+
+1. Download the latest release of BlueMapOSSStorage from the [releases page](https://github.com/Zhu555o/BlueMapOSSStorage/releases)
 2. Place the JAR file in the `./config/bluemap/packs/` directory of your server
 3. Restart your server or reload BlueMap
 
 ### CLI
-1. Download the latest release of BlueMapS3Storage from the [releases page](https://github.com/TheMeinerLP/BlueMapS3Storage/releases)
+
+1. Download the latest release of BlueMapOSSStorage from the [releases page](https://github.com/Zhu555o/BlueMapOSSStorage/releases)
 2. Place the JAR file in the `./config/packs/` directory of your server
 3. Restart your server or reload BlueMap
+
 ## Configuration
 
-To use S3 storage with BlueMap, you need to create or modify the S3 storage configuration file. Create a file named `s3.conf` in the `plugins/BlueMap/storages` directory with the following content:
+To use Aliyun OSS storage with BlueMap, you need to create or modify the OSS storage configuration file. Create a file named `oss.conf` in the `plugins/BlueMap/storages` directory with the following content:
 
 ```hocon
 ##                          ##
@@ -60,7 +60,7 @@ To use S3 storage with BlueMap, you need to create or modify the S3 storage conf
 # The storage-type of this storage.
 # Depending on this setting, different config-entries are allowed/expected in this config file.
 # Don't change this value! (If you want a different storage-type, check out the other example-configs)
-storage-type: "themeinerlp:s3"
+storage-type: "themeinerlp:oss"
 
 # The compression-type that bluemap will use to compress generated map-data.
 # Available compression-types are:
@@ -71,46 +71,51 @@ storage-type: "themeinerlp:s3"
 # The default is: gzip
 compression: gzip
 
-# The S3 storage
+# The OSS endpoint URL (e.g., oss-cn-hangzhou.aliyuncs.com for Aliyun OSS)
+endpoint: "oss-cn-hangzhou.aliyuncs.com"
+
+# OSS credentials
+access-key-id: "your-access-key-id"
+access-key-secret: "your-access-key-secret"
+
+# The name of the OSS bucket to use
 bucket-name: "bluemap-storage"
 
-# AWS region or "Minio" for MinIO
-region: "Minio"
-
-# S3 credentials
-access-key-id: "your-access-key"
-secret-access-key: "your-secret-key"
-
-# Optional: Custom endpoint URL for S3-compatible services
-# Leave empty for AWS S3
-endpoint-url: "http://localhost:9000"
-
-# Optional: The root path in the S3 bucket where BlueMap data will be stored
+# Optional: The root path in the OSS bucket where BlueMap data will be stored
 # Default is "." (root of the bucket)
 root-path: "."
-
-# Optional: Force path style access for S3 (needed for MinIO)
-# Default is false (use virtual-hosted style)
-force-path-style: true
 ```
 
 ### Configuration Options
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `storage-type` | The storage type identifier (don't change this value) | `themeinerlp:s3` |
+| `storage-type` | The storage type identifier (don't change this value) | `themeinerlp:oss` |
 | `compression` | The compression type to use for storing data (options: "gzip", "zstd", "deflate", "none") | `gzip` |
-| `bucket-name` | The name of the S3 bucket to use | `bluemap-storage` |
-| `region` | The AWS region where the bucket is located | `Minio` |
-| `access-key-id` | The AWS access key ID for authentication | `bluemap` |
-| `secret-access-key` | The AWS secret access key for authentication | `bluemap-secret` |
-| `endpoint-url` | Optional: The endpoint URL for S3-compatible services (leave empty for AWS S3) | `http://localhost:9000` |
-| `root-path` | Optional: The root path in the S3 bucket where BlueMap data will be stored | `.` |
-| `force-path-style` | Optional: Force path style access for S3 (needed for MinIO) | `false` |
+| `endpoint` | The OSS endpoint URL for your region | `oss-cn-hangzhou.aliyuncs.com` |
+| `access-key-id` | Your Aliyun Access Key ID | Required |
+| `access-key-secret` | Your Aliyun Access Key Secret | Required |
+| `bucket-name` | The name of the OSS bucket to use | `bluemap-storage` |
+| `root-path` | Optional: The root path in the OSS bucket where BlueMap data will be stored | `.` |
+
+### Common OSS Endpoints
+
+| Region | Endpoint |
+|--------|----------|
+| East China 1 (Hangzhou) | `oss-cn-hangzhou.aliyuncs.com` |
+| East China 2 (Shanghai) | `oss-cn-shanghai.aliyuncs.com` |
+| North China 1 (Qingdao) | `oss-cn-qingdao.aliyuncs.com` |
+| North China 2 (Beijing) | `oss-cn-beijing.aliyuncs.com` |
+| South China 1 (Shenzhen) | `oss-cn-shenzhen.aliyuncs.com` |
+| Hong Kong | `oss-cn-hongkong.aliyuncs.com` |
+| US West 1 (Silicon Valley) | `oss-us-west-1.aliyuncs.com` |
+| Singapore | `oss-ap-southeast-1.aliyuncs.com` |
+
+For a complete list of OSS regions and endpoints, see the [Aliyun OSS documentation](https://www.alibabacloud.com/help/en/oss/user-guide/regions-and-endpoints).
 
 ## Usage Examples
 
-### AWS S3
+### Hangzhou Region
 
 ```hocon
 ##                          ##
@@ -118,18 +123,17 @@ force-path-style: true
 ##      Storage-Config      ##
 ##                          ##
 
-storage-type: "themeinerlp:s3"
+storage-type: "themeinerlp:oss"
 compression: gzip
-bucket-name: "my-bluemap-bucket"
-region: "us-east-1"
-access-key-id: "AKIAIOSFODNN7EXAMPLE"
-secret-access-key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-endpoint-url: ""
+
+endpoint: "oss-cn-hangzhou.aliyuncs.com"
+access-key-id: "LTAI5t...your-key-id"
+access-key-secret: "your-secret-key"
+bucket-name: "my-bluemap-storage"
 root-path: "."
-force-path-style: false
 ```
 
-### MinIO
+### Shanghai Region
 
 ```hocon
 ##                          ##
@@ -137,41 +141,50 @@ force-path-style: false
 ##      Storage-Config      ##
 ##                          ##
 
-storage-type: "themeinerlp:s3"
+storage-type: "themeinerlp:oss"
 compression: gzip
-bucket-name: "bluemap"
-region: "us-east-1"
-access-key-id: "minioadmin"
-secret-access-key: "minioadmin"
-endpoint-url: "http://minio-server:9000"
-root-path: "."
-force-path-style: true
-```
 
-### DigitalOcean Spaces
-
-```hocon
-##                          ##
-##         BlueMap          ##
-##      Storage-Config      ##
-##                          ##
-
-storage-type: "themeinerlp:s3"
-compression: gzip
+endpoint: "oss-cn-shanghai.aliyuncs.com"
+access-key-id: "LTAI5t...your-key-id"
+access-key-secret: "your-secret-key"
 bucket-name: "bluemap-maps"
-region: "nyc3"
-access-key-id: "your-spaces-key"
-secret-access-key: "your-spaces-secret"
-endpoint-url: "https://nyc3.digitaloceanspaces.com"
-root-path: "."
-force-path-style: false
+root-path: "server1"
 ```
+
+### Custom Path with Compression
+
+```hocon
+##                          ##
+##         BlueMap          ##
+##      Storage-Config      ##
+##                          ##
+
+storage-type: "themeinerlp:oss"
+compression: zstd
+
+endpoint: "oss-cn-beijing.aliyuncs.com"
+access-key-id: "your-access-key-id"
+access-key-secret: "your-access-key-secret"
+bucket-name: "game-storage"
+root-path: "bluemap/survival"
+```
+
+## Getting Aliyun OSS Credentials
+
+1. Log in to the [Aliyun Console](https://homenew.console.aliyun.com/)
+2. Navigate to **Object Storage Service (OSS)**
+3. Create a new bucket or select an existing one
+4. Go to **AccessKey Management** in your account settings
+5. Create a new AccessKey or use an existing one
+6. Copy the AccessKey ID and AccessKey Secret to your configuration file
+
+**Security Note:** Keep your AccessKey Secret secure and never share it publicly. Consider using RAM (Resource Access Management) users with limited permissions for better security.
 
 ## Building from Source
 
 1. Clone the repository:
    ```
-   git clone https://github.com/TheMeinerLP/BlueMapS3Storage.git
+   git clone https://github.com/Zhu555o/BlueMapOSSStorage.git
    ```
 
 2. Build the project using Gradle:
@@ -181,6 +194,16 @@ force-path-style: false
 
 3. The built JAR file will be located in the `build/libs` directory.
 
+## Migration from AWS S3
+
+If you are migrating from the AWS S3 storage addon, you need to:
+
+1. Update the `storage-type` from `themeinerlp:s3` to `themeinerlp:oss`
+2. Change `region` to the appropriate OSS `endpoint`
+3. Rename `secret-access-key` to `access-key-secret`
+4. Remove `force-path-style` and `endpoint-url` options (not needed for OSS)
+5. Update your credentials to Aliyun AccessKey
+
 ## License
 
 This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
@@ -188,9 +211,10 @@ This project is licensed under the [GNU Affero General Public License v3.0 (AGPL
 ## Credits
 
 - Developed by [TheMeinerLP](https://github.com/TheMeinerLP) and [contributors](https://github.com/TheMeinerLP/BlueMapS3Storage/graphs/contributors)
+- Migrated to Aliyun OSS by [Zhu555o](https://github.com/Zhu555o)
 - Uses [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) by [Blue](https://github.com/TBlueF)
-- Uses [AWS Java NIO SPI for S3](https://github.com/awslabs/aws-java-nio-spi-for-s3) for S3 filesystem integration
+- Uses [Aliyun OSS SDK for Java](https://github.com/aliyun/aliyun-oss-java-sdk) for OSS integration
 
 ## Support
 
-If you encounter any issues or have questions, please [open an issue](https://github.com/TheMeinerLP/BlueMapS3Storage/issues) on the GitHub repository.
+If you encounter any issues or have questions, please [open an issue](https://github.com/Zhu555o/BlueMapOSSStorage/issues) on the GitHub repository.
