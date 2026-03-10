@@ -1,5 +1,3 @@
-Implemented by Qwen3.5 Plus in Trae CN
-
 # BlueMapOSSStorage
 
 A storage addon for [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) that enables storing map data in Aliyun OSS (Object Storage Service).
@@ -211,9 +209,8 @@ If you are migrating from the AWS S3 storage addon, you need to:
 This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
 
 ## Credits
-
 - Developed by [TheMeinerLP](https://github.com/TheMeinerLP) and [contributors](https://github.com/TheMeinerLP/BlueMapS3Storage/graphs/contributors)
-- Migrated to Aliyun OSS by [Zhu555o](https://github.com/Zhu555o)
+- Migrated to Aliyun OSS by [Zhu555o](https://github.com/Zhu555o) and by Qwen3.5 Plus in Trae CN
 - Uses [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap) by [Blue](https://github.com/TBlueF)
 - Uses [Aliyun OSS SDK for Java](https://github.com/aliyun/aliyun-oss-java-sdk) for OSS integration
 
